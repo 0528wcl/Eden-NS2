@@ -33,11 +33,41 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Apply NS2 patch
+        run: |
+          git apply --check NS2.patch
+          if ($LASTEXITCODE -ne 0) { throw 'NS2.patch does not apply cleanly.' }
+          git apply NS2.patch
+          if ($LASTEXITCODE -ne 0) { throw 'Failed to apply NS2.patch.' }
+          git status --short
+
       - name: Set up build dependencies
         run: |
           choco install ninja -y --no-progress
           cmake --version
           ninja --version
+
+      - name: Install Vulkan SDK (glslangValidator)
+        uses: humbletim/install-vulkan-sdk@v1.1.1
+        with:
+          version: latest
+          cache: true
+
+      - name: Verify Vulkan shader compiler
+        run: |
+          $shaderCompiler = Get-Command glslangValidator.exe -ErrorAction SilentlyContinue
+          if (-not $shaderCompiler -and $env:VULKAN_SDK) {
+            $sdkBin = Join-Path $env:VULKAN_SDK 'Bin'
+            if (Test-Path (Join-Path $sdkBin 'glslangValidator.exe')) {
+              $sdkBin | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+              $env:PATH = "$sdkBin;$env:PATH"
+              $shaderCompiler = Get-Command glslangValidator.exe -ErrorAction SilentlyContinue
+            }
+          }
+          if (-not $shaderCompiler) {
+            throw 'glslangValidator.exe was not found in PATH or VULKAN_SDK/Bin.'
+          }
+          & $shaderCompiler.Source --version
 
       - name: Initialize MSVC x64 environment
         uses: ilammy/msvc-dev-cmd@v1
