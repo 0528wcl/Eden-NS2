@@ -57,19 +57,19 @@ To contribute to Eden; be it financially, code, bug reports, or otherwise, see o
 
 ## Documentation
 
-We have a user manual! See our [User Handbook](./docs/user/README.md).
+We have a user manual! See our [User Handbook](https://git.eden-emu.dev/eden-emu/eden/src/branch/master/docs/user/README.md).
 
 ## Building
 
-See the [General Build Guide](docs/Build.md)
+See the [General Build Guide](https://git.eden-emu.dev/eden-emu/eden/src/branch/master/docs/Build.md)
 
-For information on provided development tooling, see the [Tools directory](./tools)
+For information on provided development tooling, see the [Tools directory](https://git.eden-emu.dev/eden-emu/eden/src/branch/master/tools)
 
 ## Download
 
 You can download the latest releases from [our release page](https://git.eden-emu.dev/eden-emu/eden/releases).
 
-Save us some bandwidth! We have [mirrors available](./docs/user/ThirdParty.md#mirrors) as well.
+Save us some bandwidth! We have [mirrors available](https://git.eden-emu.dev/eden-emu/eden/src/branch/master/docs/user/ThirdParty.md#mirrors) as well.
 
 ## License
 
